@@ -5,7 +5,8 @@ import SmugMug
 
 class Image(object):
     def __init__(self, title=None, caption=None, keywords=None, hidden=False,
-                 altitude=None, latitude=None, longitude=None, watermarked=False, is_video=False):
+                 altitude=None, latitude=None, longitude=None, watermarked=False,
+                 is_video=False, uri=None, image_key=None, collectable=False, can_edit=False):
         self.title = title
         self.caption = caption
         self.keywords = keywords
@@ -15,6 +16,15 @@ class Image(object):
         self.longitude = longitude
         self.watermarked = watermarked
         self.is_video = is_video
+        self.uri = uri
+        self.image_key = image_key
+        self.collectable = collectable
+        self.can_edit = can_edit
+
+        self.original_height = 0
+        self.original_width = 0
+        self.original_size = 0
+
 
     def get_comments(self):
         """ Returns comments associated with image"""
