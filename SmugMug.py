@@ -1,7 +1,14 @@
 #!/usr/bin/env python
 from models import  Album, AlbumImage, Folder, Image, Node, Uploader, User, UserProfile
 import requests
-import requests_oauthlib
+from requests_oauthlib import OAuth1
+
+OAUTH_ORIGIN = 'https://secure.smugmug.com'
+REQUEST_TOKEN_URL = OAUTH_ORIGIN + '/services/oauth/1.0a/getRequestToken'
+ACCESS_TOKEN_URL = OAUTH_ORIGIN + '/services/oauth/1.0a/getAccessToken'
+AUTHORIZE_URL = OAUTH_ORIGIN + '/services/oauth/1.0a/authorize'
+
+API_ORIGIN = 'https://api.smugmug.com'
 
 
 class SmugMug(object):
@@ -20,3 +27,4 @@ class SmugMug(object):
 
     def authorize(self, access="Public", permissions="Read"):
         parameters = {"Access": access, "Permissions": permissions}
+        requests.get()
