@@ -1,7 +1,7 @@
-from SmugMug import SmugMug
+import SmugMug
 import requests
 from http.downloader import Downloader
-from http.urls import API_URI
+import http.urls
 
 
 class Image(object):
@@ -31,78 +31,38 @@ class Image(object):
         self.sizes = {}
         self.album = {}
         self.owner = None
+        self.size_details = {}
+        self.point_of_interest = {}
+        self.point_of_interest_crops = {}
+        self.regions = {}
 
 
         # Use to hold JSON response for image, possibly, as a cache?
         self.json = None
 
-
-    def get_comments(self):
-        """ Returns comments associated with image"""
-        return 0
-
     def get_size(self, size="Original"):
         """ Convenience function to return the URL for the requested size"""
         return 0
 
-    def get_metadata(self):
-        """ Returns metadata for the image"""
-        return 0
-
-    def get_prices(self):
-        """ Return prices for image"""
-        return 0
-
-    def get_sizes(self):
-        """ Return available sizes"""
-        return 0
-
-    def get_size_details(self):
-        """ Return detailed size information for image"""
-        return 0
-
     def get_largest(self):
         """ Return largest size"""
-        return 0
-
-    def get_owner(self):
-        """ Return owner username"""
-        return 0
-
-    def get_album(self):
-        """ Return album that image is part of"""
-        return 0
-
-    def get_point_of_interest(self):
-        """ Return point of interest for image"""
-        return 0
-
-    def get_regions(self):
-        """ Get Regions for image"""
-        return 0
-
-    def get_point_of_interest_crops(self):
-        """ Returns PointOfInterest Crops for image"""
-        return 0
+        return self.get_size()
 
     def download(self):
-        """ Return download for image"""
-        return 0
-
-    def get_json(self):
-        """ Returns JSON converted to a dictionary of the Image"""
+        """ Download copy of image"""
         return 0
 
     def refresh(self):
         """ Updates Image object with data from SmugMug """
         if self.image_key is not None:
-            search_url = API_URI["Image"] + self.image_key
-            headers = {"Accept": "application/json"}
-            auth = SmugMug.auth
-            response_json = requests.get(search_url, headers=headers, auth=auth)
-            response = response_json.json()
+            downloader = Downloader()
+            downloader.refresh_by_key("Image", self.image_key)
         return 0
 
     def update(self):
         """ Updates the SmugMug Image with new data"""
+        return 0
+
+    def upload(self):
+        """ Uploads image to SmugMug"""
         return 0

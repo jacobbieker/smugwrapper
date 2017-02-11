@@ -47,7 +47,7 @@ class Downloader(object):
 
     def refresh_by_key(self, model, key, returntype="json"):
         """
-        Gets information for a model from SmugMug using its key
+        Get information for a model from SmugMug using its key
         :param model: String containing the name of the model to update
         :param key: Key for the resource (Image, Album, etc)
         :param returntype: Return type for the SmugMug API, defaults to JSON, currently changing does nothing
@@ -65,7 +65,7 @@ class Downloader(object):
 
     def search(self, model, returntype="json", **kwargs):
         """
-            Searches, using kwargs, for Album, Image, or User
+            Search, using kwargs, for Album, Image, or User
         :param model: Name of model to search, currently API 2.0 supports search for 'Album', 'Image' and 'User'
         :param returntype: Return type of query, defaults, and currently only, works for JSON
         :return: Results of search in a Python dictionary
