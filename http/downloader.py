@@ -48,6 +48,7 @@ class Downloader(object):
     def refresh_by_key(self, model, key, returntype="json"):
         """
         Get information for a model from SmugMug using its key
+        Use '_shorturis' and '_verbosity=1' to limit size of JSON response
         :param model: String containing the name of the model to update
         :param key: Key for the resource (Image, Album, etc)
         :param returntype: Return type for the SmugMug API, defaults to JSON, currently changing does nothing
@@ -55,11 +56,12 @@ class Downloader(object):
         """
         search_url = http.urls.API_URI[model] + key
         headers = {"Accept": "application/json"}
+        parameters = {"_shorturis": "", "_verbosity": 1}
         if self.authenticated:
             auth = self.smugmug.auth
-            response_json = requests.get(search_url, headers=headers, auth=auth)
+            response_json = requests.get(search_url, headers=headers, params=parameters, auth=auth)
         else:
-            response_json = requests.get(search_url, headers=headers)
+            response_json = requests.get(search_url, headers=headers, params=parameters)
         response = response_json.json()
         return response["Response"]
 

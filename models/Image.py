@@ -41,11 +41,15 @@ class Image(object):
         # Use to hold JSON response for image, possibly, as a cache?
         self.json = None
 
+    def _follow_uri(self, uri):
+        return 0
+
     def _unpack_json(self, json_dictionary):
         """
         Unpack to dictionary containing the JSON response for the image.
         Used to update values for Image object.
-        ":param json_dictionary: Dictionary containing the JSON of the "Response" key
+        ":param json_dictionary: Dictionary containing the JSON of the "Response" key, tested for, and assumed to be,
+        with '_shorturis' and '_verbosity=1' options enabled for the JSON
         :return:
         """
         image_root = json_dictionary["Image"]
@@ -67,7 +71,9 @@ class Image(object):
         self.image_format = image_root["Format"]
 
         self.uri = json_dictionary["Uri"]
-        return 0
+
+        # Rest that need some processing first
+        return self
 
     def get_size(self, size="Original"):
         """ Convenience function to return the URL for the requested size"""
@@ -84,14 +90,18 @@ class Image(object):
     def refresh(self):
         """ Updates Image object with data from SmugMug """
         if self.image_key is not None:
-            downloader = http.downloader.Downloader(smugmug=self.smugmug)
-            downloader.refresh_by_key("Image", self.image_key)
-        return 0
+            if self.smugmug is not None:
+                downloader = http.downloader.Downloader(smugmug=self.smugmug)
+            else:
+                downloader = http.downloader.Downloader()
+            data = downloader.refresh_by_key("Image", self.image_key)
+            self._unpack_json(data)
+        return self
 
     def update(self):
         """ Updates the SmugMug Image with new data"""
-        return 0
+        return self
 
     def upload(self):
         """ Uploads image to SmugMug"""
-        return 0
+        return self
