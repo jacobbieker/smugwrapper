@@ -5,6 +5,11 @@ from requests_oauthlib import OAuth1
 
 
 class SmugMug(object):
+    """
+    This class is in charge of authentication and overall access to the API
+    All getting/setting/changing of information with the API should be handled in the
+    appropriate model
+    """
 
     def __init__(self, api_key=None, oauth_secret=None, api_version="v2",
                  secure=False, session_id=None, oauth_token=None,

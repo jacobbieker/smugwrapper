@@ -24,6 +24,16 @@ class Image(object):
         self.original_height = 0
         self.original_width = 0
         self.original_size = 0
+        self.metadata = {}
+        self.comments = {}
+        self.prices = {}
+        self.sizes = {}
+        self.album = {}
+        self.owner = None
+
+
+        # Use to hold JSON response for image, possibly, as a cache?
+        self.json = None
 
 
     def get_comments(self):
@@ -31,7 +41,7 @@ class Image(object):
         return 0
 
     def get_size(self, size="Original"):
-        """ Convienience function to return the URL for the requested size"""
+        """ Convenience function to return the URL for the requested size"""
         return 0
 
     def get_metadata(self):
@@ -76,4 +86,12 @@ class Image(object):
 
     def download(self):
         """ Return download for image"""
+        return 0
+
+    def get_json(self):
+        """ Returns JSON converted to a dictionary of the Image"""
+        return 0
+
+    def update(self):
+        """ Updates Image object with data from SmugMug """
         return 0
