@@ -54,3 +54,18 @@ class Album(object):
         self.world_searchable = False
 
         self.smugmug = smugmug
+
+        self.album_share_uris = {}
+        self.user = None
+        self.node = None
+        self.node_cover_image = ""
+        self.folder = None
+        self.parent_folders = []
+        self.highlight_image = {}
+        self.album_highlight_image = {}
+        self.album_images = {}
+        self.album_popular_images = {}
+        self.album_geo_media = {}
+        self.album_comments = {}
+        self.album_download = {}
+        self.album_prices = {}
