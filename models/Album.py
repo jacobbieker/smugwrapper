@@ -6,6 +6,7 @@ class Album(object):
     def __init__(self, smugmug=None):
         self.title = ""
         self.description = ""
+        self.album_key = None
         self.allow_downloads = False
         self.backprinting = ""
         self.boutique_packaging = "No"
@@ -69,3 +70,26 @@ class Album(object):
         self.album_comments = {}
         self.album_download = {}
         self.album_prices = {}
+
+    def _unpack_json(self, json_dictionary):
+        return 0
+
+    def refresh(self):
+        """ Updates Album object with data from SmugMug """
+        if self.album_key is not None:
+            if self.smugmug is not None:
+                downloader = http.downloader.Downloader(smugmug=self.smugmug)
+            else:
+                downloader = http.downloader.Downloader()
+            data = downloader.refresh_by_key("Album", self.album_key)
+            self._unpack_json(data)
+        return self
+
+    def update(self):
+        """ Updates the SmugMug Album with new data"""
+        return self
+
+    def upload(self):
+        """ Uploads Album to SmugMug"""
+        return self
+
