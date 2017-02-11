@@ -1,13 +1,11 @@
 import SmugMug
-import requests
-from http.downloader import Downloader
-import http.urls
+import http
 
 
 class Image(object):
     def __init__(self, title=None, caption=None, keywords=None, hidden=False,
                  altitude=None, latitude=None, longitude=None, watermarked=False,
-                 is_video=False, uri=None, image_key=None, collectable=False, can_edit=False):
+                 is_video=False, uri=None, image_key=None, collectable=False, can_edit=False, smugmug=None):
         self.title = title
         self.caption = caption
         self.keywords = keywords
@@ -36,13 +34,15 @@ class Image(object):
         self.point_of_interest_crops = {}
         self.regions = {}
 
+        self.smugmug = smugmug
+
 
         # Use to hold JSON response for image, possibly, as a cache?
         self.json = None
 
     def get_size(self, size="Original"):
         """ Convenience function to return the URL for the requested size"""
-        return 0
+        return self.sizes[size]
 
     def get_largest(self):
         """ Return largest size"""
@@ -55,7 +55,7 @@ class Image(object):
     def refresh(self):
         """ Updates Image object with data from SmugMug """
         if self.image_key is not None:
-            downloader = Downloader()
+            downloader = http.downloader.Downloader(smugmug=self.smugmug)
             downloader.refresh_by_key("Image", self.image_key)
         return 0
 
