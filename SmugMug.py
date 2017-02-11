@@ -23,7 +23,9 @@ class SmugMug(object):
         self.oauth_token = oauth_token
         self.oauth_token_secret = oauth_token_secret
         self.api_version = api_version
+        self.auth = None
 
     def authorize(self, access="Public", permissions="Read"):
         parameters = {"Access": access, "Permissions": permissions}
         requests.get()
+        self.auth = OAuth1(self.api_key, self.oauth_secret, self.oauth_token, self.oauth_token_secret)
