@@ -4,7 +4,6 @@ import SmugMug
 
 class Album(object):
     def __init__(self, smugmug=None):
-        self.title = ""
         self.description = ""
         self.album_key = None
         self.allow_downloads = False
@@ -63,7 +62,6 @@ class Album(object):
         self.folder = None
         self.parent_folders = []
         self.highlight_image = {}
-        self.album_highlight_image = {}
         self.album_images = {}
         self.album_popular_images = {}
         self.album_geo_media = {}
@@ -72,6 +70,25 @@ class Album(object):
         self.album_prices = {}
 
     def _unpack_json(self, json_dictionary):
+        """ Unpack to dictionary containing the JSON response for the album.
+        Used to update values for Album object.
+        ":param json_dictionary: Dictionary containing the JSON of the "Response" key, tested for, and assumed to be,
+        with '_shorturis' and '_verbosity=1' options enabled for the JSON"""
+        album_root = json_dictionary["Album"]
+
+        self.name = album_root["Name"]
+        self.allow_downloads = album_root["AllowDownloads"]
+        self.description = album_root["Description"]
+        self.keywords = album_root["Keywords"]
+        self.password_hint = album_root["PasswordHint"]
+        self.protected = album_root["Protected"]
+        self.sort_direction = album_root["SortDirection"]
+        self.sort_method = album_root["SortMethod"]
+        self.album_key = album_root["AlbumKey"]
+        self.node_id = album_root["NodeID"]
+        self.image_count = album_root["ImageCount"]
+        self.url_path = album_root["UrlPath"]
+        self.can_share = album_root["CanShare"]
         return 0
 
     def refresh(self):
