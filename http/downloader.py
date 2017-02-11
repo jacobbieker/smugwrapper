@@ -73,9 +73,9 @@ class Downloader(object):
         headers = {"Accept": "application/json"}
         search_url = http.urls.API_URI[model] + "!search"
         if model.lower() == "album":
-            terms = {"Scope": kwargs["scope"] or "",
-                     "SortDirection": kwargs["sort_direction"] or "Descending",
-                     "SortMethod": kwargs["sort_method"] or "Rank", "Text": kwargs["text"] or ""}
+            terms = {"Scope": kwargs.get("scope", ""),
+                     "SortDirection": kwargs.get("sort_direction", "Descending"),
+                     "SortMethod": kwargs.get("sort_method", "Rank"), "Text": kwargs.get("text", "")}
             if self.authenticated:
                 response_json = requests.get(search_url, params=terms, headers=headers, auth=self.smugmug.auth)
             else:
@@ -83,9 +83,9 @@ class Downloader(object):
             response = response_json.json()
             return response["Response"]
         elif model.lower() == "image":
-            terms = {"Scope": kwargs["scope"] or "", "Keywords": kwargs["keywords"] or "",
-                     "SortDirection": kwargs["sort_direction"] or "Descending",
-                     "SortMethod": kwargs["sort_method"] or "Popular", "Text": kwargs["text"] or ""}
+            terms = {"Scope": kwargs.get("scope", ""), "Keywords": kwargs.get("keywords", ""),
+                     "SortDirection": kwargs.get("sort_direction", "Descending"),
+                     "SortMethod": kwargs.get("sort_method", "Popular"), "Text": kwargs.get("text", "")}
             if self.authenticated:
                 response_json = requests.get(search_url, params=terms, headers=headers, auth=self.smugmug.auth)
             else:
@@ -93,7 +93,7 @@ class Downloader(object):
             response = response_json.json()
             return response["Response"]
         elif model.lower() == "user":
-            terms = {"q": kwargs["user"] }
+            terms = {"q": kwargs.get("user", "") }
             if self.authenticated:
                 response_json = requests.get(search_url, params=terms, headers=headers, auth=self.smugmug.auth)
             else:

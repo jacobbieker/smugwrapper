@@ -1,5 +1,7 @@
 from SmugMug import SmugMug
+import requests
 from http.downloader import Downloader
+from http.urls import API_URI
 
 
 class Image(object):
@@ -91,6 +93,16 @@ class Image(object):
         """ Returns JSON converted to a dictionary of the Image"""
         return 0
 
-    def update(self):
+    def refresh(self):
         """ Updates Image object with data from SmugMug """
+        if self.image_key is not None:
+            search_url = API_URI["Image"] + self.image_key
+            headers = {"Accept": "application/json"}
+            auth = SmugMug.auth
+            response_json = requests.get(search_url, headers=headers, auth=auth)
+            response = response_json.json()
+        return 0
+
+    def update(self):
+        """ Updates the SmugMug Image with new data"""
         return 0
