@@ -1,6 +1,5 @@
-import requests
-from requests_oauthlib import OAuth1
-import SmugMug
+from SmugMug import SmugMug
+from http.downloader import Downloader
 
 
 class Image(object):

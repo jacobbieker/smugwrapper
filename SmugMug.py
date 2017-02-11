@@ -9,6 +9,7 @@ class SmugMug(object):
     This class is in charge of authentication and overall access to the API
     All getting/setting/changing of information with the API should be handled in the
     appropriate model
+    Not used if not being authenticated
     """
 
     def __init__(self, api_key=None, oauth_secret=None, api_version="v2",
