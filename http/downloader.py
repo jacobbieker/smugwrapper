@@ -33,10 +33,10 @@ class Downloader(object):
 
         if self.authenticated:
             # Work with authenticated API
-            response = requests.get(base_url + "", headers=headers, auth=self.smugmug.auth)
+            response = requests.get(base_url + "", params=terms, headers=headers, auth=self.smugmug.auth)
         else:
             # Not authenticated
-            response = requests.get(base_url + "", headers=headers)
+            response = requests.get(base_url + "", params=terms, headers=headers)
         return 0
 
     def multiget(self, parameters=None):

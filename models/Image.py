@@ -41,7 +41,14 @@ class Image(object):
         # Use to hold JSON response for image, possibly, as a cache?
         self.json = None
 
-    def _follow_uri(self, uri):
+    def _follow_uri(self, uri, end_tag):
+        """
+        Given a uri and tag to get, returns the value of that tag
+        :param uri: URI to query
+        :param end_tag: Tag, such as "AlbumImage" to search for in the response
+        :return:
+        """
+
         return 0
 
     def _unpack_json(self, json_dictionary):
