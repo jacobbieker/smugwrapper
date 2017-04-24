@@ -1,5 +1,6 @@
 import http
 import SmugMug
+import Image, Album, Folder, Node, UserProfile, AlbumImage
 
 class User(object):
     def __init__(self, name, smugmug=None):
@@ -60,11 +61,27 @@ class User(object):
         :return: Object of object_type located at the URI
         """
         representation = None
+        if self.smugmug is not None:
+            downloader = http.downloader.Downloader(smugmug=self.smugmug)
+        else:
+            downloader = http.downloader.Downloader()
 
-
+        if object_type == "UserProfile":
+            representation = UserProfile._unpack_json(downloader.refresh_by_uri(object_type, uri))
+        elif object_type == "Node":
+            representation = Node._unpack_json(downloader.refresh_by_uri(object_type, uri))
+        elif object_type == "Image":
+            representation = Image._unpack_json(downloader.refresh_by_uri(object_type, uri))
+        elif object_type == "Folder":
+            representation = Folder._unpack_json(downloader.refresh_by_uri(object_type, uri))
+        elif object_type == "Album":
+            representation = Album._unpack_json(downloader.refresh_by_uri(object_type, uri))
+        elif object_type == "AlbumImage":
+            representation = AlbumImage._unpack_json(downloader.refresh_by_uri(object_type, uri))
+        else:
+            RuntimeError("Need valid object_type")
 
         return representation
-
 
     def _unpack_json(self, json_dictionary):
         """ Unpack to dictionary containing the JSON response for the album.
@@ -82,9 +99,11 @@ class User(object):
         self.web_uri = user_root["WebUri"]
         self.ref_tag = user_root["RefTag"]
 
-        self.bio_image = self._follow_uri("BioImage", "WebUri")
-        self.cover_image = self._follow_uri("CoverImage", "WebUri")
-        self.user_profile = self._follow_uri("UserProfile")
+        self.bio_image = self._get_object("Image", uri_root["BioImage"]["Uri"])
+        self.cover_image = self._get_object("Image", uri_root["CoverImage"]["Uri"])
+        self.user_profile = self._get_object("UserProfile", uri_root["UserProfile"]["Uri"])
+        self.user_albums = self._get_object("Node", uri_root["Node"]["Uri"])
+        self.folder = self._get_object("Folder", uri_root["Folder"]["Uri"])
 
         return 0
 

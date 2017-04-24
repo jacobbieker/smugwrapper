@@ -89,6 +89,23 @@ class Node(object):
             self._unpack_json(data)
         return self
 
+    def create_node(self, uri):
+        """
+        Create node from the Node URI
+        :param uri:
+        :return: The created Node
+        """
+        self.uri = uri
+        if self.uri is not None:
+            if self.smugmug is not None:
+                downloader = http.downloader.Downloader(smugmug=self.smugmug)
+            else:
+                downloader = http.downloader.Downloader()
+            data = downloader.refresh_by_key("Node", self.uri)
+            self._unpack_json(data)
+        return self
+
+
     def update(self):
         """ Updates the SmugMug Album with new data"""
         return self
