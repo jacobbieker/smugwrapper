@@ -89,7 +89,7 @@ class Album(object):
         self.image_count = album_root["ImageCount"]
         self.url_path = album_root["UrlPath"]
         self.can_share = album_root["CanShare"]
-
+        self.node = album_root["Node"]
 
         return 0
 
